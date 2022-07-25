@@ -1,7 +1,5 @@
 #include <iostream>
 #include <math.h>
-
-using namespace std;
 // CPP program to do level order traversal
 // of a generic tree
 #include <bits/stdc++.h>
@@ -11,7 +9,7 @@ using namespace std;
 struct Node
 {
 	int key;
-	child = new Node* [10];
+	vector<Node *>child;
 };
 
 // Utility function to create a new tree node
