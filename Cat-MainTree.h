@@ -1,49 +1,95 @@
 #include <iostream>
 using namespace std;
 
-/* Node of a doubly linked list */
+template <class T>
 class Node
 {
 	public:
-	int data;
-	Node* next; // Pointer to next node in DLL
-	Node* prev; // Pointer to previous node in DLL
+	T data;
+	Node<T>* next; 
+	Node<T>* prev; 
 };
 
-
-/* Given a node as prev_node, insert
-a new node after the given node */
-void insertAfter(Node* prev_node, int new_data)
+template <class T>
+class catList : public Node<T>
 {
-	/*1. check if the given prev_node is NULL */
-	if (prev_node == NULL)
+    public:
+	void append(Node<T>** head_ref, T new_data);
+	void printList(Node<T>* node);
+	Node<T>* search(Node<T>** head_ref, T x);	
+};
+
+template <class T> 
+void catList<T>::append(Node<T>** head_ref, T new_data) 
+{ 
+    Node<T>* new_node = (Node<T>*)malloc(sizeof(Node<T>));
+    Node<T>* last = *head_ref; 
+    new_node->data = new_data; 
+    new_node->next = NULL; 
+
+    if (*head_ref == NULL)
+    { 
+        new_node->prev = NULL; 
+        *head_ref = new_node; 
+        return; 
+    } 
+  
+
+    while (last->next != NULL) 
+        last = last->next; 
+  
+    last->next = new_node; 
+
+    new_node->prev = last; 
+  
+    return; 
+} 
+
+template <class T> 
+void catList<T>::printList(Node<T>* node) 
+{ 
+    Node<T>* last; 
+    cout<<"\nTraversal in forward direction \n"; 
+    while (node != NULL) 
+    { 
+        cout<<" "<<node->data<<" "; 
+        last = node; 
+        node = node->next; 
+    } 
+  
+    cout<<"\nTraversal in reverse direction \n"; 
+    while (last != NULL) 
+    { 
+        cout<<" "<<last->data<<" "; 
+        last = last->prev; 
+    } 
+} 
+
+template <class T> 
+Node<T>* catList<T>::search(Node** head_ref, T x)
+{
+ 
+    Node<T>* temp = *head_ref;
+ 
+
+    while (temp->data != x
+           && temp->next != NULL) {
+ 
+        temp = temp->next;
+    }
+ 
+    if (temp->data != x)
 	{
-		cout<<"the given previous node cannot be NULL";
-		return;
+		return -1;
 	}
 
-	/* 2. allocate new node */
-	Node* new_node = new Node();
-
-	/* 3. put in the data */
-	new_node->data = new_data;
-
-	/* 4. Make next of new node as next of prev_node */
-	new_node->next = prev_node->next;
-
-	/* 5. Make the next of prev_node as new_node */
-	prev_node->next = new_node;
-
-	/* 6. Make prev_node as previous of new_node */
-	new_node->prev = prev_node;
-
-	/* 7. Change previous of new_node's next node */
-	if (new_node->next != NULL)
-		new_node->next->prev = new_node;
+ 
+    return (temp);
 }
+  
 
 int main ()
 {
-    cout << "Tanmay";
+    cout << "Tanmay"	;
     return 0;
 }
