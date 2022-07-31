@@ -1,5 +1,4 @@
 #include <iostream>
-#include "LinkedList.h"
 #include "GenericTree.h"
 using namespace std;
 
@@ -64,7 +63,7 @@ LinkedList<PriceDataType> insertProducts(string key)
 template <typename PriceDataType>
 void displayAllCategories(string key){
     int numberOfCategories = 4;
-    GenericTree store(numberOfCategories);
+    GenericTree<PriceDataType> store(numberOfCategories);
     store.categories[0]->name = "Produce";
     store.categories[1]->name = "Dairy";
     store.categories[2]->name = "Baked Goods";
@@ -79,30 +78,30 @@ void displayAllCategories(string key){
     {
     case 1:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts(key);
+            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts(key);
+            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
         }
         break;
     case 2:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts(key);
+            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts(key);
+            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
         }
         break;
     case 3:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts(key);
+            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts(key);
+            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
         }
         break;
     case 4:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts(key);
+            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts(key);
+            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
         }
         break;
     
