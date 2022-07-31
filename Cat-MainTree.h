@@ -64,6 +64,7 @@ void catList<T>::printList()
     while (node != NULL) 
     { 
         cout<<" "<<node->no<<" "<<node->data<<" "; 
+        cout <<endl;
         node = node->next; 
     } 
 } 
@@ -91,16 +92,15 @@ Node<T>* catList<T>::search(int catNo)
 // int main ()
 // {
 //     catList<string> catObj;
-//     string Tan = "Grocery";
-//     string an;
-//     catObj.rootNode(Tan);
-//     Tan = "Frozen";
+//     catObj.rootNode("International");
+//     string Tan = "Frozen";
 //     catObj.append(Tan);
-//     an = "Dairy";
+//     string an = "Dairy";
 // 	catObj.append(an);
 //     catObj.printList();
 //     Node<string>* found;
-//     found = catObj.search(1);
+//     cout << endl;
+//     found = catObj.search(0);
 //     cout << found->data;
 // 	// catObj.append(root, 'International');
 // 	// catObj.append(root, 'Produce');
