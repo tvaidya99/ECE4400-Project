@@ -1,5 +1,6 @@
 #include <iostream>
-#include "GenericTree.h"
+#include "Cat-MainTree.h"
+
 using namespace std;
 
 template <typename PriceDataType>
@@ -62,46 +63,45 @@ LinkedList<PriceDataType> insertProducts(string key)
 
 template <typename PriceDataType>
 void displayAllCategories(string key){
-    int numberOfCategories = 4;
-    GenericTree<PriceDataType> store(numberOfCategories);
-    store.categories[0]->name = "Produce";
-    store.categories[1]->name = "Dairy";
-    store.categories[2]->name = "Baked Goods";
-    store.categories[3]->name = "International";
-    for (int i = 0; i < numberOfCategories; i++)
-    {
-        cout << "Press 1 to go to " << store.categories[i]->name << " section" << endl;
-    }
+    catList<PriceDataType> catObj;
+    catObj.rootNode("Meat and Dairy");
+    catObj.append("International");
+    catObj.append("Produce");
+    catObj.append("Frozen");
+    catObj.printList();
+    cout << "Please press the number assosiated with category for category.." <<endl;
     int x;
     cin >> x;
     switch (x)
     {
     case 1:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
+            Nodes<PriceDataType> *CatPrice = catObj.searchPrice(x-1);
+            CatPrice->priceSorted = &(insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
+            LinkedList<PriceDataType> *CatExpiry = catObj.searchExpiry(x-1);
+            CatExpiry = (insertProducts<PriceDataType>(key));
         }
         break;
     case 2:
         if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
+            catObj.searchPrice(x-1)= insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
+            catObj.searchExpiry(x-1)= insertProducts<PriceDataType>(key);
         }
         break;
     case 3:
-        if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
+         if(key == "price"){
+            catObj.searchPrice(x-1)= insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
+            catObj.searchExpiry(x-1)= insertProducts<PriceDataType>(key);
         }
         break;
     case 4:
-        if(key == "price"){
-            store.categories[x-1]->priceSorted = insertProducts<PriceDataType>(key);
+         if(key == "price"){
+            catObj.searchPrice(x-1)= insertProducts<PriceDataType>(key);
         } else {
-            store.categories[x-1]->expirySorted = insertProducts<PriceDataType>(key);
+            catObj.searchExpiry(x-1)= insertProducts<PriceDataType>(key);
         }
         break;
     
@@ -193,16 +193,18 @@ void welcome()
     if (x == 2)
     {
         LinkedList<PriceDataType> productsPrice = insertProducts<PriceDataType>("price");
+        displayAllCategories<PriceDataType>("price");
         // display all products
-        displayAllProducts<PriceDataType>(productsPrice, "customer");
+        //displayAllProducts<PriceDataType>(productsPrice, "customer");
     }
     // admin
     // Features include: 1. Insert/Delete item 2. Sort by expiry/price
     else if (x == 1)
     {
         LinkedList<PriceDataType> productsExpiry = insertProducts<PriceDataType>("expiry");
+        displayAllCategories<PriceDataType>("expiry");
         // display all products
-        displayAllProducts<PriceDataType>(productsExpiry, "admin");
+        //displayAllProducts<PriceDataType>(productsExpiry, "admin");
     }
     return;
 }
