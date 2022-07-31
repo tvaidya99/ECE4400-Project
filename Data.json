@@ -1,0 +1,82 @@
+{
+    [
+        {
+            "Category": "Dairy",
+            "Name": "Chocolate Milk",
+            "Price": "3.49",
+            "Exp": "20220809"
+        },
+        {
+            "Category": "Dairy",
+            "Name": "Yogurt",
+            "Price": "3.00",
+            "Exp": "20220819"
+        },
+        {
+            "Category": "Dairy",
+            "Name": "Egg",
+            "Price": "3.00",
+            "Exp": "20220809"
+        },
+        {
+            "Category": "Frozen",
+            "Name": "Peas",
+            "Price": "5.29",
+            "Exp": "20221204"
+        },
+        {
+            "Category": "Frozen",
+            "Name": "Chapman Ice Cream",
+            "Price": "8.28",
+            "Exp": "20230122"
+        },
+        {
+            "Category": "Produce",
+            "Name": "Potato 2lb",
+            "Price": "4.28",
+            "Exp": "20220813"
+        },
+        {
+            "Category": "Produce",
+            "Name": "Lettus",
+            "Price": "2.49",
+            "Exp": "20220809"
+        },
+        {
+            "Category": "Produce",
+            "Name": "Grapes 2Lb",
+            "Price": "4.42",
+            "Exp": "20220821"
+        },
+        {
+            "Category": "Frozen",
+            "Name": "Pizza",
+            "Price": "10.00",
+            "Exp": "20230411"
+        },
+        {
+            "Category": "Dairy",
+            "Name": "Butter",
+            "Price": "3.49",
+            "Exp": "20220922"
+        },
+        {
+            "Category": "Dairy",
+            "Name": "Cheese 2lb",
+            "Price": "8.00",
+            "Exp": "20220910"
+        },
+        {
+            "Category": "International",
+            "Name": "Pasta",
+            "Price": "3.00",
+            "Exp": "20230522"
+        },
+        {
+            "Category": "International",
+            "Name": "Goat Cheese",
+            "Price": "11.49",
+            "Exp": "20220822"
+        }
+    ]
+}
