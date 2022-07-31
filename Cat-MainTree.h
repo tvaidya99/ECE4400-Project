@@ -17,109 +17,95 @@ class catList : public Node<T>
 {
     public:
 	int count = 0;
-	Node<T>* rootNode(T new_data);
-	void append(Node<T>** head_ref, T new_data);
-	void printList(Node<T>* node);
-	Node<T>* search(Node<T>** head_ref, T catNo);	
+    Node<T>* head_ref = (Node<T>*)malloc(sizeof(Node<T>));
+	void rootNode(T new_data);
+	void append(T new_data);
+	void printList();
+	Node<T>* search(int catNo);	
 };
 
 template<class T> 
-Node<T>* catList<T>::rootNode(T new_data)
+void catList<T>::rootNode(T new_data)
 {
-	Node<T>** head_ref = NULL;
-	Node<T>* new_node = (Node<T>*)malloc(sizeof(Node<T>));
-    Node<T>* last = *head_ref; 
-    new_node->data = new_data; 
-    new_node->next = NULL; 
-
-    if (*head_ref == NULL)
-    { 
-        new_node->prev = NULL; 
-        *head_ref = new_node; 
-        return *head_ref; 
-    } 
-  
+    Node<T>* last = head_ref; 
+    head_ref->data = new_data; 
+    head_ref->next = NULL; 
+    head_ref->prev = NULL; 
+    head_ref->no = count;
+    count++; 
 }
 
 template <class T> 
-void catList<T>::append(Node<T>** head_ref, T new_data) 
+void catList<T>::append(T new_data) 
 { 
+    
     Node<T>* new_node = (Node<T>*)malloc(sizeof(Node<T>));
-    Node<T>* last = *head_ref; 
+    Node<T>* last = head_ref; 
     new_node->data = new_data; 
     new_node->next = NULL; 
-
-    if (*head_ref == NULL)
-    { 
-        new_node->prev = NULL; 
-        *head_ref = new_node; 
-        return; 
-    } 
+    new_node->no = count;
+    count++;
+   
   
-
     while (last->next != NULL) 
+    {
         last = last->next; 
-  
-    last->next = new_node; 
+    }
 
+    last->next = new_node; 
     new_node->prev = last; 
-  
-    return; 
 } 
 
 template <class T> 
-void catList<T>::printList(Node<T>* node) 
+void catList<T>::printList() 
 { 
-    Node<T>* last; 
-    cout<<"\nTraversal in forward direction \n"; 
+    Node<T>* node = head_ref;
+    cout<<"\n List of Avaible Catagories \n"; 
     while (node != NULL) 
     { 
-        cout<<" "<<node->data<<" "; 
-        last = node; 
+        cout<<" "<<node->no<<" "<<node->data<<" "; 
         node = node->next; 
-    } 
-  
-    cout<<"\nTraversal in reverse direction \n"; 
-    while (last != NULL) 
-    { 
-        cout<<" "<<last->data<<" "; 
-        last = last->prev; 
     } 
 } 
 
 template <class T> 
-Node<T>* catList<T>::search(Node<T>** head_ref, T x)
+Node<T>* catList<T>::search(int catNo)
 {
  
-    Node<T>* temp = *head_ref;
+    Node<T>* temp = head_ref;
  
 
-    while (temp->data != x
-           && temp->next != NULL) {
- 
+    while (temp->no != catNo  && temp->next != NULL) 
+    {
         temp = temp->next;
     }
  
-    if (temp->data != x)
+    if (temp->no != catNo)
 	{
-		return -1;
+		cout << "Catagory not found! Last Catagory returned...";
 	}
-
- 
     return (temp);
 }
   
 
-int main ()
-{
-    catList<string> catObj;
-	Node<string>* root;
-	root = catObj.rootNode('GroceryStore');
-	catObj.append(root, 'Dairy');
-	catObj.append(root, 'International');
-	catObj.append(root, 'Produce');
-	catObj.append(root, 'Frozen');
-	catObj.printList;
-	Node<string>* selctCat = catObj.search(root, 'Frozen')
+// int main ()
+// {
+//     catList<string> catObj;
+//     string Tan = "Grocery";
+//     string an;
+//     catObj.rootNode(Tan);
+//     Tan = "Frozen";
+//     catObj.append(Tan);
+//     an = "Dairy";
+// 	catObj.append(an);
+//     catObj.printList();
+//     Node<string>* found;
+//     found = catObj.search(1);
+//     cout << found->data;
+// 	// catObj.append(root, 'International');
+// 	// catObj.append(root, 'Produce');
+// 	// catObj.append(root, 'Frozen');
+
+//     return 0;
 	
-}
+// }
