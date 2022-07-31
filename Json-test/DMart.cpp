@@ -59,6 +59,10 @@ LinkedList insertProducts(string key)
     return products;
 }
 
+void displayAllCategories(){
+    
+}
+
 void displayAllProducts(LinkedList products, string user)
 {
     products.displayProducts();
@@ -114,7 +118,13 @@ void displayAllProducts(LinkedList products, string user)
         }
         else
         {
+            string sortBy = "price";
+            if(products.key == "price"){
+                sortBy = "expiry";
+            }
 
+            LinkedList sortedList = products.sortTo(sortBy);
+            displayAllProducts(sortedList, user);
         }
     }
 }

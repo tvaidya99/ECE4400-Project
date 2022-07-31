@@ -148,6 +148,16 @@ public:
         }
     }
 
+    LinkedList sortTo(string sortBy){
+        LinkedList sortedList(count, sortBy);
+        Node* tempHead = head;
+        while(tempHead != NULL){
+            sortedList.insertProduct(tempHead->product);
+            tempHead = tempHead->next;
+        }
+        return sortedList;
+    }
+
     void displayProducts()
     {
         if (!isLinkedListEmpty())
