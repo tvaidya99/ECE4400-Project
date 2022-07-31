@@ -1,52 +1,53 @@
 #include <iostream>
 using namespace std;
 
+template <typename PriceDataType>
 class Product
 {
 public:
     int count, expiry;
-    float price;
+    PriceDataType price;
     string name;
 };
 
+template <typename PriceDataType>
 class Node
 {
 public:
-    Product product;
-    Node *next;
+    Product<PriceDataType> product;
+    Node<PriceDataType> *next;
 };
 
+template <typename PriceDataType>
 class LinkedList
 {
 private:
-    int listSize;
     int count;
-    Node *head;
-    Node *tail;
+    Node<PriceDataType> *head;
+    Node<PriceDataType> *tail;
 
 public:
     string key;
-    LinkedList(int size, string keyLocal)
+    LinkedList(string keyLocal)
     {
-        listSize = size;
         count = 0;
         key = keyLocal;
     }
 
-    void insertProduct(Product productLocal)
+    void insertProduct(Product<PriceDataType> productLocal)
     {
-        Node *newNode = new Node();
+        Node<PriceDataType> *newNode = new Node<PriceDataType>();
         newNode->product = productLocal;
         newNode->next = NULL;
         // insert into non-empty list
         if (!isLinkedListEmpty())
         {
-            Node *tempHead = head;
+            Node<PriceDataType> *tempHead = head;
 
             // insert sort by price
             if (key == "price")
             {
-                Node *prev = NULL;
+                Node<PriceDataType> *prev = NULL;
                 // move to the node with product price greater than or equal to insert "product.price"
                 while (tempHead != NULL && tempHead->product.price < productLocal.price)
                 {
@@ -75,7 +76,7 @@ public:
             // insert sort by expiry
             else
             {
-                Node *prev = NULL;
+                Node<PriceDataType> *prev = NULL;
                 // move to the node with product expiry greater than or equal to insert "product.expiry"
                 while (tempHead != NULL && tempHead->product.expiry < productLocal.expiry)
                 {
@@ -117,8 +118,8 @@ public:
         if (isLinkedListEmpty())
             return;
 
-        Node *tempHead = head;
-        Node *prev = NULL;
+        Node<PriceDataType> *tempHead = head;
+        Node<PriceDataType> *prev = NULL;
         // move to the node with product name equal "productName"
         while (tempHead != NULL && tempHead->product.name != productName)
         {
@@ -148,9 +149,9 @@ public:
         }
     }
 
-    LinkedList sortTo(string sortBy){
-        LinkedList sortedList(count, sortBy);
-        Node* tempHead = head;
+    LinkedList<PriceDataType> sortTo(string sortBy){
+        LinkedList<PriceDataType> sortedList(sortBy);
+        Node<PriceDataType> *tempHead = head;
         while(tempHead != NULL){
             sortedList.insertProduct(tempHead->product);
             tempHead = tempHead->next;
@@ -162,7 +163,7 @@ public:
     {
         if (!isLinkedListEmpty())
         {
-            Node *tempHead = head;
+            Node<PriceDataType> *tempHead = head;
 
             while (tempHead != NULL)
             {
@@ -179,7 +180,7 @@ public:
         // continue if the linked list is not empty
         if (!isLinkedListEmpty())
         {
-            Node *tempHead = head;
+            Node<PriceDataType> *tempHead = head;
             while (true)
             {
                 if (head->next != NULL)

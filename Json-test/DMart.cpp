@@ -1,11 +1,13 @@
 #include <iostream>
 #include "LinkedList.h"
+#include "GenericTree.h"
 using namespace std;
 
-LinkedList insertProducts(string key)
+template <typename PriceDataType>
+LinkedList<PriceDataType> insertProducts(string key)
 {
-    LinkedList products(8, key);
-    Product product;
+    LinkedList<PriceDataType> products(key);
+    Product<PriceDataType> product;
 
     // populate products in the btree
     product.name = "Milk";
@@ -59,11 +61,59 @@ LinkedList insertProducts(string key)
     return products;
 }
 
-void displayAllCategories(){
+template <typename PriceDataType>
+void displayAllCategories(string key){
+    int numberOfCategories = 4;
+    GenericTree store(numberOfCategories);
+    store.categories[0]->name = "Produce";
+    store.categories[1]->name = "Dairy";
+    store.categories[2]->name = "Baked Goods";
+    store.categories[3]->name = "International";
+    for (int i = 0; i < numberOfCategories; i++)
+    {
+        cout << "Press 1 to go to " << store.categories[i]->name << " section" << endl;
+    }
+    int x;
+    cin >> x;
+    switch (x)
+    {
+    case 1:
+        if(key == "price"){
+            store.categories[x-1]->priceSorted = insertProducts(key);
+        } else {
+            store.categories[x-1]->expirySorted = insertProducts(key);
+        }
+        break;
+    case 2:
+        if(key == "price"){
+            store.categories[x-1]->priceSorted = insertProducts(key);
+        } else {
+            store.categories[x-1]->expirySorted = insertProducts(key);
+        }
+        break;
+    case 3:
+        if(key == "price"){
+            store.categories[x-1]->priceSorted = insertProducts(key);
+        } else {
+            store.categories[x-1]->expirySorted = insertProducts(key);
+        }
+        break;
+    case 4:
+        if(key == "price"){
+            store.categories[x-1]->priceSorted = insertProducts(key);
+        } else {
+            store.categories[x-1]->expirySorted = insertProducts(key);
+        }
+        break;
+    
+    default:
+        break;
+    }
     
 }
 
-void displayAllProducts(LinkedList products, string user)
+template <typename PriceDataType>
+void displayAllProducts(LinkedList<PriceDataType> products, string user)
 {
     products.displayProducts();
     if (user == "customer")
@@ -95,7 +145,7 @@ void displayAllProducts(LinkedList products, string user)
         // insert product
         if (choice == 1)
         {
-            Product product;
+            Product<PriceDataType> product;
             cout << "\nEnter name of the product: ";
             getline(cin >> ws, product.name);
             cout << "\nEnter count of the product: ";
@@ -105,7 +155,7 @@ void displayAllProducts(LinkedList products, string user)
             cout << "\nEnter expiry of the product: ";
             cin >> product.expiry;
             products.insertProduct(product);
-            displayAllProducts(products, user);
+            displayAllProducts<PriceDataType>(products, user);
         }
         // delete product
         else if (choice == 2)
@@ -114,7 +164,7 @@ void displayAllProducts(LinkedList products, string user)
             cout << "\nEnter name of the product: ";
             getline(cin >> ws, name);
             products.deleteProduct(name);
-            displayAllProducts(products, user);
+            displayAllProducts<PriceDataType>(products, user);
         }
         else
         {
@@ -123,12 +173,13 @@ void displayAllProducts(LinkedList products, string user)
                 sortBy = "expiry";
             }
 
-            LinkedList sortedList = products.sortTo(sortBy);
-            displayAllProducts(sortedList, user);
+            LinkedList<PriceDataType> sortedList = products.sortTo(sortBy);
+            displayAllProducts<PriceDataType>(sortedList, user);
         }
     }
 }
 
+template <typename PriceDataType>
 void welcome()
 {
     cout << "Welcome to the Store! \n";
@@ -142,23 +193,23 @@ void welcome()
     // Features include: 1. Show products 2. Sort by price
     if (x == 2)
     {
-        LinkedList productsPrice = insertProducts("price");
+        LinkedList<PriceDataType> productsPrice = insertProducts<PriceDataType>("price");
         // display all products
-        displayAllProducts(productsPrice, "customer");
+        displayAllProducts<PriceDataType>(productsPrice, "customer");
     }
     // admin
     // Features include: 1. Insert/Delete item 2. Sort by expiry/price
     else if (x == 1)
     {
-        LinkedList productsExpiry = insertProducts("expiry");
+        LinkedList<PriceDataType> productsExpiry = insertProducts<PriceDataType>("expiry");
         // display all products
-        displayAllProducts(productsExpiry, "admin");
+        displayAllProducts<PriceDataType>(productsExpiry, "admin");
     }
     return;
 }
 
 int main()
 {
-    welcome();
+    welcome<float>();
     return 0;
 }
