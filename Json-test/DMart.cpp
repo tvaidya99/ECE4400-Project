@@ -93,7 +93,7 @@ void displayAllProducts(LinkedList products, string user)
         {
             Product product;
             cout << "\nEnter name of the product: ";
-            cin >> product.name;
+            getline(cin >> ws, product.name);
             cout << "\nEnter count of the product: ";
             cin >> product.count;
             cout << "\nEnter price of the product: ";
@@ -108,12 +108,13 @@ void displayAllProducts(LinkedList products, string user)
         {
             string name;
             cout << "\nEnter name of the product: ";
-            cin >> name;
+            getline(cin >> ws, name);
             products.deleteProduct(name);
             displayAllProducts(products, user);
         }
         else
         {
+
         }
     }
 }
@@ -137,7 +138,7 @@ void welcome()
     }
     // admin
     // Features include: 1. Insert/Delete item 2. Sort by expiry/price
-    else if(x == 1)
+    else if (x == 1)
     {
         LinkedList productsExpiry = insertProducts("expiry");
         // display all products
