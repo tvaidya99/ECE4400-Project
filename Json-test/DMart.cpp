@@ -1,133 +1,67 @@
 #include <iostream>
-#include "BTree.h"
+#include "LinkedList.h"
 using namespace std;
 
-template <typename T>
-BTree<T> insertProducts(string key)
+LinkedList insertProducts(string key)
 {
-    BTree<T> btree(3, key);
-    Product<T> product;
+    LinkedList products(8, key);
+    Product product;
 
     // populate products in the btree
     product.name = "Milk";
-    if (key == "price")
-    {
-        product.key = 4.99;
-    }
-    else
-    {
-        product.key = 20220731;
-    }
     product.expiry = 20220731;
     product.price = 4.99;
     product.count = 31;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Eggs";
-    if (key == "price")
-    {
-        product.key = 6.99;
-    }
-    else
-    {
-        product.key = 20220830;
-    }
     product.price = 6.99;
     product.expiry = 20220830;
     product.count = 52;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Yogurt";
-    if (key == "price")
-    {
-        product.key = 2.99;
-    }
-    else
-    {
-        product.key = 20220723;
-    }
     product.price = 2.99;
     product.expiry = 20220723;
     product.count = 33;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Cheese";
-    if (key == "price")
-    {
-        product.key = 3.99;
-    }
-    else
-    {
-        product.key = 20220703;
-    }
     product.price = 3.99;
     product.expiry = 20220703;
     product.count = 39;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "String Cheese";
-    if (key == "price")
-    {
-        product.key = 11.99;
-    }
-    else
-    {
-        product.key = 20220711;
-    }
     product.price = 11.99;
     product.expiry = 20220711;
     product.count = 23;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Ice Cream";
-    if (key == "price")
-    {
-        product.key = 7.99;
-    }
-    else
-    {
-        product.key = 20220721;
-    }
     product.price = 7.99;
     product.expiry = 20220721;
     product.count = 44;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Milk Powder";
-    if (key == "price")
-    {
-        product.key = 14.99;
-    }
-    else
-    {
-        product.key = 20220701;
-    }
     product.expiry = 20220701;
     product.price = 14.99;
     product.count = 39;
-    btree.insert(product);
+    products.insertProduct(product);
 
     product.name = "Sour Cream";
     product.count = 65;
-    if (key == "price")
-    {
-        product.key = 1.99;
-    }
-    else
-    {
-        product.key = 20220818;
-    }
     product.price = 1.99;
     product.expiry = 20220818;
-    btree.insert(product);
+    products.insertProduct(product);
 
-    return btree;
+    return products;
 }
 
-template <typename T>
-void displayAllProducts(BTree<T> btree, string user)
+void displayAllProducts(LinkedList products, string user)
 {
-    btree.root->sortedTraverse();
+    products.displayProducts();
     if (user == "customer")
     {
         // provide option to go back to categories menu
@@ -138,7 +72,7 @@ void displayAllProducts(BTree<T> btree, string user)
              << "\n";
         cout << "Press 2 to delete an item."
              << "\n";
-        if (btree.key == "expiry")
+        if (products.key == "expiry")
         {
             cout << "Press 3 to sort by price."
                  << "\n";
@@ -157,7 +91,7 @@ void displayAllProducts(BTree<T> btree, string user)
         // insert product
         if (choice == 1)
         {
-            Product<T> product;
+            Product product;
             cout << "\nEnter name of the product: ";
             cin >> product.name;
             cout << "\nEnter count of the product: ";
@@ -165,31 +99,21 @@ void displayAllProducts(BTree<T> btree, string user)
             cout << "\nEnter price of the product: ";
             cin >> product.price;
             cout << "\nEnter expiry of the product: ";
-            cin >> product.key;
-            btree.insert(product);
-            displayAllProducts(btree, user);
+            cin >> product.expiry;
+            products.insertProduct(product);
+            displayAllProducts(products, user);
         }
         // delete product
         else if (choice == 2)
         {
-            T key;
             string name;
             cout << "\nEnter name of the product: ";
             cin >> name;
-            if (btree.key == "expiry")
-                cout << "\nEnter expiry of the product: ";
-            else
-                cout << "\nEnter price of the product: ";
-            cin >> key;
-            btree.root->deleteProduct(key, name);
-            displayAllProducts(btree, user);
+            products.deleteProduct(name);
+            displayAllProducts(products, user);
         }
         else
         {
-            // if(btree.key == "price"){
-            //     BTree<float> btreePrice = btree.sortWithKey<float>("expiry");
-            //     displayAllProducts(btreePrice);
-            // }
         }
     }
 }
@@ -209,18 +133,18 @@ int main()
         // Features include: 1. Show products 2. Sort by price
         if (x == 1)
         {
-            BTree<float> btreePrice = insertProducts<float>("price");
+            LinkedList productsPrice = insertProducts("price");
             // display all products
-            displayAllProducts<float>(btreePrice, "customer");
+            displayAllProducts(productsPrice, "customer");
             break;
         }
         // admin
         // Features include: 1. Insert/Delete item 2. Sort by expiry/price
         else
         {
-            BTree<int> btreeExpiry = insertProducts<int>("expiry");
+            LinkedList productsExpiry = insertProducts("expiry");
             // display all products
-            displayAllProducts<int>(btreeExpiry, "admin");
+            displayAllProducts(productsExpiry, "admin");
             break;
         }
     }
