@@ -118,36 +118,36 @@ void displayAllProducts(LinkedList products, string user)
     }
 }
 
+void welcome()
+{
+    cout << "Welcome to the Store! \n";
+    cout << "Press 2 to sign in as a customer \n";
+    cout << "Press 1 to sign in as an admin \n";
+    cout << "Press 0 to exit the store \n";
+    int x = 1;
+    cin >> x;
+
+    // customer
+    // Features include: 1. Show products 2. Sort by price
+    if (x == 2)
+    {
+        LinkedList productsPrice = insertProducts("price");
+        // display all products
+        displayAllProducts(productsPrice, "customer");
+    }
+    // admin
+    // Features include: 1. Insert/Delete item 2. Sort by expiry/price
+    else if(x == 1)
+    {
+        LinkedList productsExpiry = insertProducts("expiry");
+        // display all products
+        displayAllProducts(productsExpiry, "admin");
+    }
+    return;
+}
+
 int main()
 {
-    //Product<float> *productsArray = new Product<float>[10];
-    while (true)
-    {
-        cout << "Welcome to the Store! \n";
-        cout << "Press 1 to sign in as a customer \n";
-        cout << "Press 0 to sign in as an admin \n";
-        int x = 1;
-        cin >> x;
-
-        // customer
-        // Features include: 1. Show products 2. Sort by price
-        if (x == 1)
-        {
-            LinkedList productsPrice = insertProducts("price");
-            // display all products
-            displayAllProducts(productsPrice, "customer");
-            break;
-        }
-        // admin
-        // Features include: 1. Insert/Delete item 2. Sort by expiry/price
-        else
-        {
-            LinkedList productsExpiry = insertProducts("expiry");
-            // display all products
-            displayAllProducts(productsExpiry, "admin");
-            break;
-        }
-    }
-
+    welcome();
     return 0;
 }

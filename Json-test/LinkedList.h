@@ -114,6 +114,38 @@ public:
 
     void deleteProduct(string productName)
     {
+        if (isLinkedListEmpty())
+            return;
+
+        Node *tempHead = head;
+        Node *prev = NULL;
+        // move to the node with product name equal "productName"
+        while (tempHead != NULL && tempHead->product.name != productName)
+        {
+            prev = tempHead;
+            tempHead = tempHead->next;
+        }
+
+        // element not found
+        if(tempHead == NULL) {
+            return;
+        }
+
+        // first element needs to be deleted
+        if(prev == NULL){
+            head = head->next;
+            delete tempHead;
+            count--;
+        }
+        // deleting element beyond first element
+        else {
+            // deleting last element
+            if(tempHead->next == NULL){
+                tail = prev;
+            }
+            prev->next = tempHead->next;
+            delete tempHead;
+        }
     }
 
     void displayProducts()
