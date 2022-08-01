@@ -21,7 +21,7 @@ public:
 template <typename PriceDataType>
 class LinkedList
 {
-private:
+protected:
     int count;
     Node<PriceDataType> *head;
     Node<PriceDataType> *tail;
