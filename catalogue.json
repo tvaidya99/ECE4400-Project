@@ -7,5 +7,8 @@
   {"name": "pork chops", "category": "meat", "price": 21.99, "expiry": 20220809, "count": 12},
   {"name": "arugula", "category": "fruits & vegetables", "price": 7.99, "expiry": 20220804, "count": 7},
   {"name": "kiwi", "category": "fruits & vegetables", "price": 4.99, "expiry": 20220817, "count": 45},
-  {"name": "orange", "category": "fruits & vegetables", "price": 6.99, "expiry": 20220817, "count": 45}
+  {"name": "orange", "category": "fruits & vegetables", "price": 6.99, "expiry": 20220817, "count": 45},
+  {"name": "yogurt", "category": "dairy", "price": 3.99, "expiry": 20220901, "count": 12},
+  {"name": "Tomato", "category": "fruits & vegetables", "price": 0.99, "expiry": 20220811, "count": 103},
+  {"name": "Choclate milk", "category": "dairy", "price": 3.99, "expiry": 20220830, "count": 8}
 ]
