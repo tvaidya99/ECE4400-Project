@@ -28,10 +28,12 @@ private:
 
 public:
     string key;
-    LinkedList(string keyLocal)
+    string name;
+    LinkedList(string keyLocal, string name = "Unnamed")
     {
         count = 0;
         key = keyLocal;
+        this->name = name;
     }
 
     void insertProduct(Product<PriceDataType> productLocal)
