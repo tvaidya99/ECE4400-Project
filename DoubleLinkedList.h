@@ -55,7 +55,7 @@ public:
 
 
 
-struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float>> {
+struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> > {
 
     LinkedListNode<float>* search(string category) {
         // Special case: empty DLL
@@ -77,9 +77,31 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float>>
         }
 
 
+
         // If no match is found, return NULL
         return NULL;
     }
+
+
+    // Print function
+    void displayProducts() {
+
+        LinkedListNode<float>* category = this->first;
+
+        while (category != NULL) {
+            cout << "Category: " << category->name << endl;
+
+            category->displayProducts();
+
+            category = category->next;
+
+            cout << endl;
+        }
+
+        return;
+    }
+
+
 };
 
 #endif //JSONPARSING_DOUBLELINKEDLIST_H

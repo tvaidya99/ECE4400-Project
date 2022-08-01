@@ -137,7 +137,7 @@ struct CategoryQueue : public Queue<T> {
 
 
 template<class T>
-struct OuterCategoryQueue : public Queue<CategoryQueue<T>> {
+struct OuterCategoryQueue : public Queue<CategoryQueue<T> > {
     CategoryQueue<T>* search(string category) {
         CategoryQueue<T>* temp = this->first;
 
@@ -169,6 +169,7 @@ private:
 
     Queue<ItemNode>* unsortedData;
     CategoryDoubleLinkedList* sorted;
+    LinkedList<float>* wholeCatalogue;
 
 
     // Reads all the data and returns the raw text as a string
@@ -306,6 +307,9 @@ private:
     void sortData() {
         sorted = new CategoryDoubleLinkedList();
 
+        // Instantiate wholeCatalogue
+        wholeCatalogue = new LinkedList<float>("price", "Whole Catalogue");
+
         ItemNode* nodeBeingSorted = unsortedData->dequeue();
         LinkedListNode<float>* categoryMatch = NULL;
 
@@ -316,6 +320,9 @@ private:
         while (nodeBeingSorted != NULL) {
             // Generate a node to populate the sortedData
             newProd = this->convert(nodeBeingSorted);
+
+            // Add every item to a massive LinkedList, so there is also a category which holds everything
+            wholeCatalogue->insertProduct(*newProd);
 
             // Get the pointer to the CategoryNode which matches the category of the item being sorted.
             // If no match is found, this function will return NULL. That case is captured in the following if statement.
@@ -331,6 +338,7 @@ private:
             else {
                 categoryMatch->insertProduct(*newProd);
             }
+
 
             // Dequeue the next node to be sorted here
             nodeBeingSorted = unsortedData->dequeue();
@@ -348,6 +356,8 @@ public:
 
     JSONInterface() {
         unsortedData = NULL;
+        sorted = NULL;
+        wholeCatalogue = NULL;
     }
 
     void readData(string filename) {
@@ -360,21 +370,8 @@ public:
         return sorted;
     }
 
-    void printSortedData() {
-
-        cout << "DISPLAYING CATALOGUE\n\n";
-
-        LinkedListNode<float>* category = sorted->getFirst();
-
-        while (category != NULL) {
-            cout << "Category: " << category->name << endl;
-
-            category->displayProducts();
-
-            category = category->next;
-        }
-
-        return;
+    LinkedList<float>* getWholeCatalogue() {
+        return wholeCatalogue;
     }
 
 };
