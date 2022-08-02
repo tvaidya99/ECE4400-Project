@@ -1,10 +1,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include "DMart.cpp"
+#include "LinkedList.h"
+#include "CustomerHistoryCQMethod.h"
+#include "DoubleLinkedList.h"
 #include "jsonParser.h"
-using namespace std;
 
+using namespace std;
+CustomerHistoryCQ quo;
 
 
 
@@ -12,11 +15,24 @@ void runAddDelete(int displayMode, string sortBy) {
 
 }
 
+void addcustomer()
+{
+    cout << "Enter your name: " << endl;
+    string name;
+    getline(cin >> ws, name);
+    string email;
+    cout << "Enter your email: " << endl;
+    getline(cin >> ws, email);
+    quo.enqueue(name, email);
+}
+
+
 
 
 
 // This function runs the whole program
 void runSkynet() {
+
 
     // Get the catalogue from the JSON file
     JSONInterface* json = new JSONInterface();
@@ -36,123 +52,90 @@ void runSkynet() {
 
 
     // Introduce ourselves
-    cout << "\n\nHello, welcome to Anuj, Malcolm and Tanmay's shop.\n";
 
 
     // Set up prompt loop
     bool running = true;
     int response;
     int catNo;
+    string ans;
+    int choice;
+
 
     // First prompt
-    cout << "\n\nHow would you like to see the items? Enter your answer.\n1 - Display all items\n2 - Display items sorted by category\n0 - Exit shop\n\n";
-    cin >> response;
+    // cout << "\n\nHow would you like to see the items? Enter your answer.\n1 - Display all items\n2 - Display items sorted by category\n0 - Exit shop\n\n";
+    // cin >> response;
 
 
-    while (running) {
-
-        switch (response) {
-            case (1): // Display altogether
-                displayMode = 1;
-                cout << "Display Settings: No Categories, Ordered by " << sortBy << ".\n";
+    while (running) 
+    {
+        cout << "\nHi Welcome to the store!\n";
+        cout << "\n Are you a customer or a admin? Press 1 for customer and 2 for Admin Press 0 to exit the store. \n \n";
+        cin >> response;
+        switch (response)
+        {
+        case (0):
+            cout << "\n Thank you for shopping with us! Have a wonderful day!...\n";
+            break;
+        case (1):
+            cout << " Would you like to sign up for our newsletter? please press yes to enter the name and press anything to skip \n ";
+            cin >> ans;
+            if (ans == "yes" || ans == "YES" || ans == "Yes" || ans == "y")
+            {
+                addcustomer();
+            }
+            cout << " \n How would like to see the products today? \n";
+            cout << " Please Press 1 to see all products by price... \n Press 2 to see the products of perticular category by price \n Press 0 to exit out \n";
+            cin >> choice;
+            switch (choice)
+            {
+            case (0):
+                running = false;
+                break;
+            case (1):
+                cout << " Here is the list of all products sorted by price. \n";
                 catalogueSingleCategory->displayProducts();
                 break;
-            case (2): // Display by category
-                // displayMode = 2;
-   
-                // cout << "Display Settings: By Category, Ordered by " << sortBy << ".\n";
-                // catalogue->displayProducts();
-
-                displayMode = 2;
-                cout << "Please Press 1 for Dairy...."<<endl;
-                cout << "Please Press 2 for Meat...."<<endl;
-                cout << "Please Press 3 for Produce...."<<endl;
+            case (2):
+                cout << "Please Press 1 for Dairy.... \n";
+                cout << "Please Press 2 for Meat.... \n";
+                cout << "Please Press 3 for Produce.... \n";
                 cin >> catNo;
                 switch (catNo)
                 {
-                case (1):
-                    cout << "Display Settings: By Category Dairy, Ordered by " << sortBy << ".\n";
-                    catalogue->displaybyCatProducts(catNo);
-                    break;
-                case (2):
-                    cout << "Display Settings: By Category Meat, Ordered by " << sortBy << ".\n";
-                    catalogue->displaybyCatProducts(catNo);
-                    break;
-                case (3):
-                    cout << "Display Settings: By Category Produce, Ordered by " << sortBy << ".\n";
-                    catalogue->displaybyCatProducts(catNo);
-                    break;
-                default:
-                    break;
+                    case (1):
+                        cout << "\n Display Settings: By Category Dairy, Ordered by " << "Price" << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    case (2):
+                        cout << "\n Display Settings: By Category Meat, Ordered by " << "Price" << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    case (3):
+                        cout << "\n Display Settings: By Category Produce, Ordered by " << "Price" << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    default:
+                        break;
                 }
-                break;
-            case (3): // Swap sort method
-                if (displayMode == 1) {
-                    *catalogueSingleCategory = catalogueSingleCategory->sortTo(alternateSortBy);
-                    catalogueSingleCategory->displayProducts();
-                    string temp = sortBy;
-                    sortBy = alternateSortBy;
-                    alternateSortBy = sortBy;
-                }
-                else if (displayMode == 2) {
-                    LinkedListNode<float>* category = catalogue->getFirst();
-                    LinkedListNode<float>* prev = NULL;
-                    LinkedListNode<float>* newFirst = NULL;
-
-
-                    while (category != NULL) {
-                        category = category->nodeSortTo(alternateSortBy);
-                        // Since sortTo reassigns the pointer to a new object, the referencing needs to be updated
-                        if (prev != NULL) {
-                            prev->next = category;
-                        }
-                        // Special case: this is the first LinkedListNode sorting differently.
-                        // in this case the head of the catalogue DLL need to be set to this. The head is reserved
-                        // the first and last node can be updated at the same time after the loop. This ensures no
-                        // partial switch.
-                        else {
-                            newFirst = category;
-                        }
-
-                        // Increment along
-                        prev = category;
-                        category = category->next;
-                    }
-
-                    // Update the catalogue, so it is linked to the new (resorted) nodes
-                    catalogue->setFirstAndLast(newFirst, prev);
-
-                    catalogue->displayProducts();
-
-                    string temp = sortBy;
-                    sortBy = alternateSortBy;
-                    alternateSortBy = sortBy;
-                }
-                break;
-            case (0): // Exit program
-                running = false;
-                cout << "Thank you for coming.";
                 break;
             default:
-                cout << "Invalid entry, please try again.\n\n";
+                break;
+            }
+
+        default:
+            break;
         }
-
-
-        // Re-prompt
-        cout << "\n\nHow would you like to see the items? Enter your answer.\n1 - Display all items\n";
-        cout << "2 - Display items sorted by category\n3 - Display the same way, but ordered by " << alternateSortBy << "\n0 - Exit shop\n\n";
-        cin >> response;
-
     }
+
 }
 
 
-
-// int main() {
-
-
-//     runSkynet();
+int main() {
 
 
-//     return 0;
-// }
+    runSkynet();
+
+
+    return 0;
+}
