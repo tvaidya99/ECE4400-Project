@@ -7,12 +7,23 @@
 #include "jsonParser.h"
 
 using namespace std;
-
+CustomerHistoryCQ quo;
 
 
 
 void runAddDelete(int displayMode, string sortBy) {
 
+}
+
+void addcustomer()
+{
+    cout << "Enter your name: " << endl;
+    string name;
+    getline(cin >> ws, name);
+    string email;
+    cout << "Enter your email: " << endl;
+    getline(cin >> ws, email);
+    quo.enqueue(name, email);
 }
 
 
@@ -21,7 +32,7 @@ void runAddDelete(int displayMode, string sortBy) {
 
 // This function runs the whole program
 void runSkynet() {
-    CustomerHistoryCQ quo;
+
 
     // Get the catalogue from the JSON file
     JSONInterface* json = new JSONInterface();
@@ -58,7 +69,6 @@ void runSkynet() {
 
     while (running) 
     {
-        CustomerHistoryCQ quo;
         cout << "\nHi Welcome to the store!\n";
         cout << "\n Are you a customer or a admin? Press 1 for customer and 2 for Admin Press 0 to exit the store. \n \n";
         cin >> response;
@@ -72,73 +82,47 @@ void runSkynet() {
             cin >> ans;
             if (ans == "yes" || ans == "YES" || ans == "Yes" || ans == "y")
             {
-                cout << "Enter your name: " << endl;
-                string name;
-                getline(cin >> ws, name);
-                string email;
-                cout << "Enter your email: " << endl;
-                getline(cin >> ws, email);
-                quo.enqueue(name, email);
-                cout << " \n How would like to see the products today? \n";
-                cout << " Please Press 1 to see all products by price... \n Press 2 to see the products of perticular category by price \n Press 0 to exit out \n";
-                cin >> choice;
-
-                switch (choice)
+                addcustomer();
+            }
+            cout << " \n How would like to see the products today? \n";
+            cout << " Please Press 1 to see all products by price... \n Press 2 to see the products of perticular category by price \n Press 0 to exit out \n";
+            cin >> choice;
+            switch (choice)
+            {
+            case (0):
+                running = false;
+                break;
+            case (1):
+                cout << " Here is the list of all products sorted by price. \n";
+                catalogueSingleCategory->displayProducts();
+                break;
+            case (2):
+                cout << "Please Press 1 for Dairy.... \n";
+                cout << "Please Press 2 for Meat.... \n";
+                cout << "Please Press 3 for Produce.... \n";
+                cin >> catNo;
+                switch (catNo)
                 {
-                case (0):
-                    running = false;
-                    break;
-                case (1):
-                    cout << " Here is the list of all products sorted by price. \n";
-                    catalogueSingleCategory->displayProducts();
-                    break;
-                case (2):
-                    cout << "Please Press 1 for Dairy...."<<endl;
-                    cout << "Please Press 2 for Meat...."<<endl;
-                    cout << "Please Press 3 for Produce...."<<endl;
-                    cin >> catNo;
-                    switch (catNo)
-                    {
                     case (1):
-                        cout << "Display Settings: By Category Dairy, Ordered by " << sortBy << ".\n";
+                        cout << "\n Display Settings: By Category Dairy, Ordered by " << "Price" << ".\n";
                         catalogue->displaybyCatProducts(catNo);
                         break;
                     case (2):
-                        cout << "Display Settings: By Category Meat, Ordered by " << sortBy << ".\n";
+                        cout << "\n Display Settings: By Category Meat, Ordered by " << "Price" << ".\n";
                         catalogue->displaybyCatProducts(catNo);
                         break;
                     case (3):
-                        cout << "Display Settings: By Category Produce, Ordered by " << sortBy << ".\n";
+                        cout << "\n Display Settings: By Category Produce, Ordered by " << "Price" << ".\n";
                         catalogue->displaybyCatProducts(catNo);
                         break;
                     default:
                         break;
-                    }
-                    break;
-                default:
-                    break;1
-    
                 }
+                break;
+            default:
+                break;
+            }
 
-            }
-            else 
-            {
-                cout << " \n How would like to see the products today? \n";
-                cout << " Please Press 1 to see all products by price... \n Press 2 to see the products of perticular category by price \n Press 0 to exit out \n";
-                cin >> choice;
-                switch (choice)
-                {
-                case (0):
-                    running = false;
-                    break;
-                case (1):
-                    cout << " Here is the list of all products sorted by price. \n";
-                    catalogueSingleCategory->displayProducts();
-                    break;
-                default:
-                    break;
-                }
-            }
         default:
             break;
         }
