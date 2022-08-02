@@ -41,6 +41,10 @@ void expirySort(int catNo)
     // Update the catalogue, so it is linked to the new (resorted) nodes
     catalogue->setFirstAndLast(newFirst, prev);
 
+    if (catNo == 4)
+    {
+        
+    }
     catalogue->displaybyCatProducts(catNo);
 }
 
@@ -57,7 +61,8 @@ void displayAllCategories(string key)
     int catNo;
     cout << "Please Press 1 for Dairy...." << endl;
     cout << "Please Press 2 for Meat...." << endl;
-    cout << "Please Press 3 for Produce...." << endl;
+    cout << "Please Press 3 for Produce.... \n" << endl;
+    cout << "Please Press 4 for All Categories... \n"<<endl;
     cin >> catNo;
     switch (catNo)
     {
@@ -92,6 +97,19 @@ void displayAllCategories(string key)
         else
         {
             expirySort<PriceDataType>(catNo);
+        }
+        break;
+    case(3)
+        {
+            if (key == "price")
+            {
+                cout << "Display Settings: All Category, Ordered by " << key << ".\n";
+                catalogue->displaybyCatProducts(catNo);
+            }
+            else
+            {
+                expirySort<PriceDataType>(catNo);
+            }
         }
         break;
     default:
