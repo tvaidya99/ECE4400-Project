@@ -32,8 +32,6 @@ struct LinkedListNode : public LinkedList<T> {
     }
 };
 
-
-
 template<class T>
 struct DoubleLinkedList {
 protected:
@@ -159,13 +157,6 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> 
 
         return;
     }   
-
-
-
-
-
-
-
 
     // Print function
     void displayProducts() {
