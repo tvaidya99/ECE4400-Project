@@ -92,8 +92,32 @@ void runSkynet() {
                     cout << " Here is the list of all products sorted by price. \n";
                     catalogueSingleCategory->displayProducts();
                     break;
-                default:
+                case (2):
+                    cout << "Please Press 1 for Dairy...."<<endl;
+                    cout << "Please Press 2 for Meat...."<<endl;
+                    cout << "Please Press 3 for Produce...."<<endl;
+                    cin >> catNo;
+                    switch (catNo)
+                    {
+                    case (1):
+                        cout << "Display Settings: By Category Dairy, Ordered by " << sortBy << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    case (2):
+                        cout << "Display Settings: By Category Meat, Ordered by " << sortBy << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    case (3):
+                        cout << "Display Settings: By Category Produce, Ordered by " << sortBy << ".\n";
+                        catalogue->displaybyCatProducts(catNo);
+                        break;
+                    default:
+                        break;
+                    }
                     break;
+                default:
+                    break;1
+    
                 }
 
             }
