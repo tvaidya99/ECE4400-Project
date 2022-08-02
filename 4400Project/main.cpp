@@ -42,6 +42,7 @@ void runSkynet() {
     // Set up prompt loop
     bool running = true;
     int response;
+    int catNo;
 
     // First prompt
     cout << "\n\nHow would you like to see the items? Enter your answer.\n1 - Display all items\n2 - Display items sorted by category\n0 - Exit shop\n\n";
@@ -57,9 +58,33 @@ void runSkynet() {
                 catalogueSingleCategory->displayProducts();
                 break;
             case (2): // Display by category
+                // displayMode = 2;
+   
+                // cout << "Display Settings: By Category, Ordered by " << sortBy << ".\n";
+                // catalogue->displayProducts();
+
                 displayMode = 2;
-                cout << "Display Settings: By Category, Ordered by " << sortBy << ".\n";
-                catalogue->displayProducts();
+                cout << "Please Press 1 for Dairy...."<<endl;
+                cout << "Please Press 2 for Meat...."<<endl;
+                cout << "Please Press 3 for Produce...."<<endl;
+                cin >> catNo;
+                switch (catNo)
+                {
+                case (1):
+                    cout << "Display Settings: By Category Dairy, Ordered by " << sortBy << ".\n";
+                    catalogue->displaybyCatProducts(catNo);
+                    break;
+                case (2):
+                    cout << "Display Settings: By Category Meat, Ordered by " << sortBy << ".\n";
+                    catalogue->displaybyCatProducts(catNo);
+                    break;
+                case (3):
+                    cout << "Display Settings: By Category Produce, Ordered by " << sortBy << ".\n";
+                    catalogue->displaybyCatProducts(catNo);
+                    break;
+                default:
+                    break;
+                }
                 break;
             case (3): // Swap sort method
                 if (displayMode == 1) {
@@ -123,11 +148,11 @@ void runSkynet() {
 
 
 
-int main() {
+// int main() {
 
 
-    runSkynet();
+//     runSkynet();
 
 
-    return 0;
-}
+//     return 0;
+// }

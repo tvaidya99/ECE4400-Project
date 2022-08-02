@@ -101,6 +101,71 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> 
         return NULL;
     }
 
+        // Print specific category product 
+    void displaybyCatProducts(int catNo) {
+
+        LinkedListNode<float>* category = this->first;
+
+        switch (catNo)
+        {
+        case (1):
+            while (category != NULL) {
+                if (category->name == "dairy")
+                {
+                    category->displayProducts();
+
+                    category = category->next;
+                    cout << endl;
+                }
+                else 
+                {
+                    category = category->next;
+                }
+            }
+            break;
+        case (2):
+            while (category != NULL) {
+                if (category->name == "meat")
+                {
+                    category->displayProducts();
+
+                    category = category->next;
+                    cout << endl;
+                }
+                else
+                {
+                    category = category->next;
+                }
+            }
+            break;
+        case (3):
+            while (category != NULL) {
+                if (category->name == "produce")
+                {
+                    category->displayProducts();
+
+                    category = category->next;
+                    cout << endl;
+                }
+                else
+                {
+                    category = category->next;
+                }
+            }
+            break;
+        default:
+            break;
+        }
+
+        return;
+    }   
+
+
+
+
+
+
+
 
     // Print function
     void displayProducts() {

@@ -1,289 +1,384 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "LinkedList.h"
 #include "CustomerHistoryCQMethod.h"
+#include "DoubleLinkedList.h"
+#include "jsonParser.h"
 
 using namespace std;
 CustomerHistoryCQ quo;
 
+
+// template <typename PriceDataType>
+// LinkedList<PriceDataType> insertProduceProducts(string key)
+// {
+//     LinkedList<PriceDataType> products(key);
+//     Product<PriceDataType> product;
+
+//     product.name = "Spinach";
+//     product.expiry = 20220731;
+//     product.price = 4.99;
+//     product.count = 31;
+//     products.insertProduct(product);
+
+//     product.name = "Strawberries";
+//     product.price = 6.99;
+//     product.expiry = 20220830;
+//     product.count = 52;
+//     products.insertProduct(product);
+
+//     product.name = "Mustard greens";
+//     product.price = 2.99;
+//     product.expiry = 20220723;
+//     product.count = 33;
+//     products.insertProduct(product);
+
+//     product.name = "Nectarines";
+//     product.price = 3.99;
+//     product.expiry = 20220703;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Apples";
+//     product.price = 11.99;
+//     product.expiry = 20220711;
+//     product.count = 23;
+//     products.insertProduct(product);
+
+//     product.name = "Grapes";
+//     product.price = 7.99;
+//     product.expiry = 20220721;
+//     product.count = 44;
+//     products.insertProduct(product);
+
+//     product.name = "Cherries";
+//     product.expiry = 20220701;
+//     product.price = 14.99;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Kale";
+//     product.count = 65;
+//     product.price = 1.99;
+//     product.expiry = 20220818;
+//     products.insertProduct(product);
+
+//     return products;
+// }
+
+// template <typename PriceDataType>
+// LinkedList<PriceDataType> insertDairyProducts(string key)
+// {
+//     LinkedList<PriceDataType> products(key);
+//     Product<PriceDataType> product;
+
+//     product.name = "Milk";
+//     product.expiry = 20220731;
+//     product.price = 4.99;
+//     product.count = 31;
+//     products.insertProduct(product);
+
+//     product.name = "Eggs";
+//     product.price = 6.99;
+//     product.expiry = 20220830;
+//     product.count = 52;
+//     products.insertProduct(product);
+
+//     product.name = "Yogurt";
+//     product.price = 2.99;
+//     product.expiry = 20220723;
+//     product.count = 33;
+//     products.insertProduct(product);
+
+//     product.name = "Cheese";
+//     product.price = 3.99;
+//     product.expiry = 20220703;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "String Cheese";
+//     product.price = 11.99;
+//     product.expiry = 20220711;
+//     product.count = 23;
+//     products.insertProduct(product);
+
+//     product.name = "Ice Cream";
+//     product.price = 7.99;
+//     product.expiry = 20220721;
+//     product.count = 44;
+//     products.insertProduct(product);
+
+//     product.name = "Milk Powder";
+//     product.expiry = 20220701;
+//     product.price = 14.99;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Sour Cream";
+//     product.count = 65;
+//     product.price = 1.99;
+//     product.expiry = 20220818;
+//     products.insertProduct(product);
+
+//     return products;
+// }
+
+// template <typename PriceDataType>
+// LinkedList<PriceDataType> insertBakedProducts(string key)
+// {
+//     LinkedList<PriceDataType> products(key);
+//     Product<PriceDataType> product;
+
+//     product.name = "Bread";
+//     product.expiry = 20220731;
+//     product.price = 4.99;
+//     product.count = 31;
+//     products.insertProduct(product);
+
+//     product.name = "Cakes";
+//     product.price = 6.99;
+//     product.expiry = 20220830;
+//     product.count = 52;
+//     products.insertProduct(product);
+
+//     product.name = "Candy";
+//     product.price = 2.99;
+//     product.expiry = 20220723;
+//     product.count = 33;
+//     products.insertProduct(product);
+
+//     product.name = "Confections";
+//     product.price = 3.99;
+//     product.expiry = 20220703;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Cookies";
+//     product.price = 11.99;
+//     product.expiry = 20220711;
+//     product.count = 23;
+//     products.insertProduct(product);
+
+//     product.name = "Icings";
+//     product.price = 7.99;
+//     product.expiry = 20220721;
+//     product.count = 44;
+//     products.insertProduct(product);
+
+//     product.name = "Frosting";
+//     product.expiry = 20220701;
+//     product.price = 14.99;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Cupcakes";
+//     product.count = 65;
+//     product.price = 1.99;
+//     product.expiry = 20220818;
+//     products.insertProduct(product);
+
+//     return products;
+// }
+
+// template <typename PriceDataType>
+// LinkedList<PriceDataType> insertInternationalProducts(string key)
+// {
+//     LinkedList<PriceDataType> products(key);
+//     Product<PriceDataType> product;
+
+//     product.name = "Dumplings";
+//     product.expiry = 20220731;
+//     product.price = 4.99;
+//     product.count = 31;
+//     products.insertProduct(product);
+
+//     product.name = "Pho";
+//     product.price = 6.99;
+//     product.expiry = 20220830;
+//     product.count = 52;
+//     products.insertProduct(product);
+
+//     product.name = "Tagine";
+//     product.price = 2.99;
+//     product.expiry = 20220723;
+//     product.count = 33;
+//     products.insertProduct(product);
+
+//     product.name = "Dim Sum";
+//     product.price = 3.99;
+//     product.expiry = 20220703;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     product.name = "Gallo Pinto";
+//     product.price = 11.99;
+//     product.expiry = 20220711;
+//     product.count = 23;
+//     products.insertProduct(product);
+
+//     product.name = "Goulash";
+//     product.price = 7.99;
+//     product.expiry = 20220721;
+//     product.count = 44;
+//     products.insertProduct(product);
+
+//     product.name = "Jägerbraten";
+//     product.expiry = 20220701;
+//     product.price = 14.99;
+//     product.count = 39;
+//     products.insertProduct(product);
+
+//     return products;
+// }
+
 template <typename PriceDataType>
-LinkedList<PriceDataType> insertProduceProducts(string key)
+void expirySort(int catNo)
 {
-    LinkedList<PriceDataType> products(key);
-    Product<PriceDataType> product;
+    JSONInterface* json = new JSONInterface();
+    json->readData("catalogue.json");
+    CategoryDoubleLinkedList* catalogue = json->getCatalogue();
+    LinkedList<float>* catalogueSingleCategory = json->getWholeCatalogue();
+    LinkedListNode<float>* category = catalogue->getFirst();
 
-    product.name = "Spinach";
-    product.expiry = 20220731;
-    product.price = 4.99;
-    product.count = 31;
-    products.insertProduct(product);
+    LinkedListNode<float>* prev = NULL;
+    LinkedListNode<float>* newFirst = NULL;
 
-    product.name = "Strawberries";
-    product.price = 6.99;
-    product.expiry = 20220830;
-    product.count = 52;
-    products.insertProduct(product);
 
-    product.name = "Mustard greens";
-    product.price = 2.99;
-    product.expiry = 20220723;
-    product.count = 33;
-    products.insertProduct(product);
+    while (category != NULL) 
+    {
+        category = category->nodeSortTo("price");
+        // Since sortTo reassigns the pointer to a new object, the referencing needs to be updated
+        if (prev != NULL)
+        {
+            prev->next = category;
+        }
+        else 
+        {
+            newFirst = category;
+        }
 
-    product.name = "Nectarines";
-    product.price = 3.99;
-    product.expiry = 20220703;
-    product.count = 39;
-    products.insertProduct(product);
+        // Increment along
+        prev = category;
+        category = category->next;
+    }
 
-    product.name = "Apples";
-    product.price = 11.99;
-    product.expiry = 20220711;
-    product.count = 23;
-    products.insertProduct(product);
+    // Update the catalogue, so it is linked to the new (resorted) nodes
+    catalogue->setFirstAndLast(newFirst, prev);
 
-    product.name = "Grapes";
-    product.price = 7.99;
-    product.expiry = 20220721;
-    product.count = 44;
-    products.insertProduct(product);
+    catalogue->displaybyCatProducts(catNo);
 
-    product.name = "Cherries";
-    product.expiry = 20220701;
-    product.price = 14.99;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "Kale";
-    product.count = 65;
-    product.price = 1.99;
-    product.expiry = 20220818;
-    products.insertProduct(product);
-
-    return products;
-}
-
-template <typename PriceDataType>
-LinkedList<PriceDataType> insertDairyProducts(string key)
-{
-    LinkedList<PriceDataType> products(key);
-    Product<PriceDataType> product;
-
-    product.name = "Milk";
-    product.expiry = 20220731;
-    product.price = 4.99;
-    product.count = 31;
-    products.insertProduct(product);
-
-    product.name = "Eggs";
-    product.price = 6.99;
-    product.expiry = 20220830;
-    product.count = 52;
-    products.insertProduct(product);
-
-    product.name = "Yogurt";
-    product.price = 2.99;
-    product.expiry = 20220723;
-    product.count = 33;
-    products.insertProduct(product);
-
-    product.name = "Cheese";
-    product.price = 3.99;
-    product.expiry = 20220703;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "String Cheese";
-    product.price = 11.99;
-    product.expiry = 20220711;
-    product.count = 23;
-    products.insertProduct(product);
-
-    product.name = "Ice Cream";
-    product.price = 7.99;
-    product.expiry = 20220721;
-    product.count = 44;
-    products.insertProduct(product);
-
-    product.name = "Milk Powder";
-    product.expiry = 20220701;
-    product.price = 14.99;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "Sour Cream";
-    product.count = 65;
-    product.price = 1.99;
-    product.expiry = 20220818;
-    products.insertProduct(product);
-
-    return products;
-}
-
-template <typename PriceDataType>
-LinkedList<PriceDataType> insertBakedProducts(string key)
-{
-    LinkedList<PriceDataType> products(key);
-    Product<PriceDataType> product;
-
-    product.name = "Bread";
-    product.expiry = 20220731;
-    product.price = 4.99;
-    product.count = 31;
-    products.insertProduct(product);
-
-    product.name = "Cakes";
-    product.price = 6.99;
-    product.expiry = 20220830;
-    product.count = 52;
-    products.insertProduct(product);
-
-    product.name = "Candy";
-    product.price = 2.99;
-    product.expiry = 20220723;
-    product.count = 33;
-    products.insertProduct(product);
-
-    product.name = "Confections";
-    product.price = 3.99;
-    product.expiry = 20220703;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "Cookies";
-    product.price = 11.99;
-    product.expiry = 20220711;
-    product.count = 23;
-    products.insertProduct(product);
-
-    product.name = "Icings";
-    product.price = 7.99;
-    product.expiry = 20220721;
-    product.count = 44;
-    products.insertProduct(product);
-
-    product.name = "Frosting";
-    product.expiry = 20220701;
-    product.price = 14.99;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "Cupcakes";
-    product.count = 65;
-    product.price = 1.99;
-    product.expiry = 20220818;
-    products.insertProduct(product);
-
-    return products;
-}
-
-template <typename PriceDataType>
-LinkedList<PriceDataType> insertInternationalProducts(string key)
-{
-    LinkedList<PriceDataType> products(key);
-    Product<PriceDataType> product;
-
-    product.name = "Dumplings";
-    product.expiry = 20220731;
-    product.price = 4.99;
-    product.count = 31;
-    products.insertProduct(product);
-
-    product.name = "Pho";
-    product.price = 6.99;
-    product.expiry = 20220830;
-    product.count = 52;
-    products.insertProduct(product);
-
-    product.name = "Tagine";
-    product.price = 2.99;
-    product.expiry = 20220723;
-    product.count = 33;
-    products.insertProduct(product);
-
-    product.name = "Dim Sum";
-    product.price = 3.99;
-    product.expiry = 20220703;
-    product.count = 39;
-    products.insertProduct(product);
-
-    product.name = "Gallo Pinto";
-    product.price = 11.99;
-    product.expiry = 20220711;
-    product.count = 23;
-    products.insertProduct(product);
-
-    product.name = "Goulash";
-    product.price = 7.99;
-    product.expiry = 20220721;
-    product.count = 44;
-    products.insertProduct(product);
-
-    product.name = "Jägerbraten";
-    product.expiry = 20220701;
-    product.price = 14.99;
-    product.count = 39;
-    products.insertProduct(product);
-
-    return products;
 }
 
 template <typename PriceDataType>
 void displayAllCategories(string key)
 {
-    int numberOfCategories = 4;
 
-    string *categories = new string[4];
-    categories[0] = "Produce";
-    categories[1] = "Dairy";
-    categories[2] = "Baked Goods";
-    categories[3] = "International";
+    JSONInterface* json = new JSONInterface();
+    json->readData("catalogue.json");
+    CategoryDoubleLinkedList* catalogue = json->getCatalogue();
+    LinkedList<float>* catalogueSingleCategory = json->getWholeCatalogue();
+    LinkedListNode<float>* category = catalogue->getFirst();
 
-    for (int i = 0; i < numberOfCategories; i++)
+    LinkedListNode<float>* prev = NULL;
+    LinkedListNode<float>* newFirst = NULL;
+    // int numberOfCategories = 4;
+
+    // string *categories = new string[4];
+    // categories[0] = "Produce";
+    // categories[1] = "Dairy";
+    // categories[2] = "Baked Goods";
+    // categories[3] = "International";
+
+    // for (int i = 0; i < numberOfCategories; i++)
+    // {
+    //     cout << "Press "<< i+1 << " to go to " << categories[i] << " section" << endl;
+    // }
+
+    // int x;
+    // cin >> x;
+    // switch (x)
+    // {
+    //     case 1:
+    //         if(key == "price"){
+    //             LinkedList<PriceDataType> producePrice = insertProduceProducts<PriceDataType>(key);
+    //             displayAllProducts(producePrice, "customer");
+    //         } else {
+    //             LinkedList<PriceDataType> produceExpiry = insertProduceProducts<PriceDataType>(key);
+    //             displayAllProducts(produceExpiry, "admin");
+    //         }
+    //         break;
+    //     case 2:
+    //         if(key == "price"){
+    //             LinkedList<PriceDataType> dairyPrice = insertDairyProducts<PriceDataType>(key);
+    //             displayAllProducts(dairyPrice, "customer");
+    //         } else {
+    //             LinkedList<PriceDataType> dairyExpiry = insertDairyProducts<PriceDataType>(key);
+    //             displayAllProducts(dairyExpiry, "admin");
+    //         }
+    //         break;
+    //     case 3:
+    //         if(key == "price"){
+    //             LinkedList<PriceDataType> bakedPrice = insertBakedProducts<PriceDataType>(key);
+    //             displayAllProducts(bakedPrice, "customer");
+    //         } else {
+    //             LinkedList<PriceDataType> bakedExpiry = insertBakedProducts<PriceDataType>(key);
+    //             displayAllProducts(bakedExpiry, "admin");
+    //         }
+    //         break;
+    //     case 4:
+    //         if(key == "price"){
+    //             LinkedList<PriceDataType> internationalPrice = insertInternationalProducts<PriceDataType>(key);
+    //             displayAllProducts(internationalPrice, "customer");
+    //         } else {
+    //             LinkedList<PriceDataType> internationalExpiry = insertInternationalProducts<PriceDataType>(key);
+    //             displayAllProducts(internationalExpiry, "admin");
+    //         }
+    //         break;
+
+    // default:
+    //     break;
+    // }
+    int catNo;
+    cout << "Please Press 1 for Dairy...."<<endl;
+    cout << "Please Press 2 for Meat...."<<endl;
+    cout << "Please Press 3 for Produce...."<<endl;
+    cin >> catNo;
+    switch (catNo)
     {
-        cout << "Press "<< i+1 << " to go to " << categories[i] << " section" << endl;
-    }
-
-    int x;
-    cin >> x;
-    switch (x)
-    {
-        case 1:
-            if(key == "price"){
-                LinkedList<PriceDataType> producePrice = insertProduceProducts<PriceDataType>(key);
-                displayAllProducts(producePrice, "customer");
-            } else {
-                LinkedList<PriceDataType> produceExpiry = insertProduceProducts<PriceDataType>(key);
-                displayAllProducts(produceExpiry, "admin");
-            }
-            break;
-        case 2:
-            if(key == "price"){
-                LinkedList<PriceDataType> dairyPrice = insertDairyProducts<PriceDataType>(key);
-                displayAllProducts(dairyPrice, "customer");
-            } else {
-                LinkedList<PriceDataType> dairyExpiry = insertDairyProducts<PriceDataType>(key);
-                displayAllProducts(dairyExpiry, "admin");
-            }
-            break;
-        case 3:
-            if(key == "price"){
-                LinkedList<PriceDataType> bakedPrice = insertBakedProducts<PriceDataType>(key);
-                displayAllProducts(bakedPrice, "customer");
-            } else {
-                LinkedList<PriceDataType> bakedExpiry = insertBakedProducts<PriceDataType>(key);
-                displayAllProducts(bakedExpiry, "admin");
-            }
-            break;
-        case 4:
-            if(key == "price"){
-                LinkedList<PriceDataType> internationalPrice = insertInternationalProducts<PriceDataType>(key);
-                displayAllProducts(internationalPrice, "customer");
-            } else {
-                LinkedList<PriceDataType> internationalExpiry = insertInternationalProducts<PriceDataType>(key);
-                displayAllProducts(internationalExpiry, "admin");
-            }
-            break;
-
+    case (1):
+        if (key =="price")
+        {
+            cout << "Display Settings: By Category Dairy, Ordered by " << key << ".\n";
+            catalogue->displaybyCatProducts(catNo);
+        }
+        else
+        {
+            expirySort(catNo);
+        }
+        break;
+    case (2):
+        if (key =="price")
+        {
+            cout << "Display Settings: By Category Meat, Ordered by " << key << ".\n";
+            catalogue->displaybyCatProducts(catNo, key);
+        }
+        else
+        {
+            expirySort(catNo);
+        }
+        break;
+    case (3):
+        if (key =="price")
+        {
+            cout << "Display Settings: By Category Produce, Ordered by " << key << ".\n";
+            catalogue->displaybyCatProducts(catNo);
+        }
+        else
+        {
+            expirySort(catNo);
+        }
+        break;
     default:
         break;
     }
