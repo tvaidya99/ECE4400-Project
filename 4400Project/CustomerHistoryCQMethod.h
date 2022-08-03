@@ -46,6 +46,13 @@ void CustomerHistoryCQ::enqueue(string name, string email)
     // Create a new Customer Node
     CustomerNode *temp = new CustomerNode(name, email);
 
+    // Special case: Queue will exceed max size
+    // Dequeue first node
+    if (size == maxSize)
+    {
+        this->dequeue();
+    }
+
     // Special case: Queue is empty
     // Set rear and front equal to new node
     if (size == 0)
@@ -54,12 +61,6 @@ void CustomerHistoryCQ::enqueue(string name, string email)
         front = rear = temp;
         size++;
         return;
-    }
-    // Special case: Queue will exceed max size
-    // Dequeue first node
-    if (size == maxSize)
-    {
-        this->dequeue();
     }
 
     // Insert new node at the rear
@@ -86,6 +87,7 @@ void CustomerHistoryCQ::dequeue()
     {
         delete front;
         front = rear = NULL;
+        size--;
         return;
     }
 
