@@ -262,7 +262,10 @@ int main()
 {
     // to test admin customer history
     quo.enqueue("Anuj", "arsevak@mun.ca");
+    // read data from json
     json->readData("catalogue.json");
     welcome<float>();
+    // save data in a new file
+    json->saveData();
     return 0;
 }

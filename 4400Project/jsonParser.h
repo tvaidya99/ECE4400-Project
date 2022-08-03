@@ -173,7 +173,7 @@ private:
 
 
     // Reads all the data and returns the raw text as a string
-    string getRawData(string filename) {
+    string getRawData() {
 
         // Setup variables to open file and store data
         ifstream fileHandler;
@@ -290,6 +290,9 @@ private:
 
         }
 
+        // Enqueue the last item
+        items->enqueue(temp);
+
         return items;
 
     }
@@ -302,6 +305,19 @@ private:
         newProd->price = i->price;
 
         return newProd;
+    }
+
+    ItemNode* convert(Node<float>* node, string category) {
+        Product<float> prod = node->product;
+
+        ItemNode* temp = new ItemNode();
+        temp->category = category;
+        temp->name = prod.name;
+        temp->price = prod.price;
+        temp->count = prod.count;
+        temp->expiry = prod.expiry;
+
+        return temp;
     }
 
     void sortData() {
@@ -351,17 +367,106 @@ private:
         cout<<"Name: "<<node->product.name<<", Expiry: "<<node->product.expiry<<", Price: "<<node->product.price<<", Count: "<<node->product.count<<endl;
     }
 
+    void refreshQueue() {
+        // Delete the old queue and make a new one
+        delete unsortedData;
+        unsortedData = new Queue<ItemNode>();
+
+        // Setup temporary navigation variables
+        LinkedListNode<float>* category = sorted->getFirst();
+        string categoryName;
+        Node<float>* oldNode;
+        ItemNode* newNode;
+
+        // Iterate through every category in the sorted DLL
+        while (category != NULL) {
+
+            // Special case: Category is empty
+            if (category->isLinkedListEmpty()) {
+                continue;
+            }
+
+            categoryName = category->name;
+
+            // Get the head of the category and navigate through each node, converting them all to ItemNodes which are pushed to the queue
+            oldNode = category->getHead();
+
+            while (oldNode != nullptr) {
+                newNode = convert(oldNode, categoryName);
+                unsortedData->enqueue(newNode);
+                oldNode = oldNode->next;
+            }
+
+            category = category->next;
+
+        }
+
+        return;
+
+    }
+
+    string generateJSONText() {
+        string data = "[";
+        bool first = true;
+
+        // This string is used to make the price only go to 2 decimal places
+        string price;
+
+        // Navigate through all unsortedData
+        ItemNode* temp = unsortedData->dequeue();
+        while (temp != NULL) {
+            if (!first) {
+                data += ",";
+            }
+            else {
+                first = false;
+            }
+
+            price = to_string(temp->price);
+            price = price.substr(0, price.find('.') + 3);
+
+            data += "\n\t{\"name\": \"" + temp->name + "\"";
+            data += ", \"category\": \"" + temp->category + "\"";
+            data += ", \"price\": " + price;
+            data += ", \"expiry\": " + to_string(temp->expiry);
+            data += ", \"count\": " + to_string(temp->count) + "}";
+
+            temp = unsortedData->dequeue();
+        }
+
+        data += "\n]";
+        return data;
+    }
+
+    void writeToFile(string data) {
+        ofstream fileHandler;
+        fileHandler.open(filename);
+
+        if (fileHandler.is_open()) {
+            fileHandler << data;
+            fileHandler.close();
+            return;
+        }
+
+        cout << "File couldn't be opened\n";
+
+    }
+
 
 public:
+    string filename;
 
     JSONInterface() {
+        filename = "";
         unsortedData = NULL;
         sorted = NULL;
         wholeCatalogue = NULL;
     }
 
-    void readData(string filename) {
-        string allData = this->getRawData(filename);
+    void readData(string file) {
+        this->filename = file;
+
+        string allData = this->getRawData();;
         unsortedData = this->parseData(allData);
         this->sortData();
     }
@@ -372,6 +477,31 @@ public:
 
     LinkedList<float>* getWholeCatalogue() {
         return wholeCatalogue;
+    }
+
+    // bug where this doesn't overwrite json
+    void saveData(string file = "") {
+
+        // overwrite filename variable if a new file name is passed in
+        if (file != "") {
+            filename = file;
+        }
+        // If neither variable holds a filename, use catalogue.json as a default
+        else if (filename == "") {
+            cout << "No filename provided to write to. Using \"catalogue.json\"" << endl;
+            filename = "catalogue.json";
+        }
+
+        // Refresh the queue to have another sorted list of ItemNodes based on the sorted catalogue
+        this->refreshQueue();
+
+        // Generate a string containing all the unsorted data in a json format
+        string data = this->generateJSONText();
+
+        // Write the data to file
+        this->writeToFile(data);
+
+        cout << "Data saved to " << this->filename << ".\n";
     }
 
 };

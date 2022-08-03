@@ -12,14 +12,17 @@ using namespace std;
 template<class T>
 struct LinkedListNode : public LinkedList<T> {
     LinkedListNode<T>* next;
+    LinkedListNode<T>* prev;
 
     LinkedListNode(string key, string name) : LinkedList<T>(key, name) {
         next = NULL;
+        prev = NULL;
     }
 
     LinkedListNode<T>* nodeSortTo(string sortBy) {
         LinkedListNode<T>* newList = new LinkedListNode<T>(sortBy, this->name);
         newList->next = this->next;
+        newList->prev = this->prev;
 
         Node<T> *temp = this->head;
 
@@ -30,7 +33,13 @@ struct LinkedListNode : public LinkedList<T> {
 
         return newList;
     }
+
+    Node<T>* getHead() {
+        return this->head;
+    }
 };
+
+
 
 template<class T>
 struct DoubleLinkedList {
@@ -53,8 +62,9 @@ public:
             return;
         }
 
-        // Otherwise, make the new node the next of the last node and update the last referencing
+        // Otherwise, add new node at the end
         last->next = newNode;
+        newNode->prev = last;
         last = newNode;
         return;
 
@@ -69,11 +79,14 @@ public:
 
 struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> > {
 
+    // Updates the first and last node at the same time, this ensures the first and last aren't pointing to
+    // separate lists
     void setFirstAndLast(LinkedListNode<float>* f, LinkedListNode<float>* l) {
         this->first = f;
         this->last = l;
     }
 
+    // Linear search function (since this is not an ordered list)
     LinkedListNode<float>* search(string category) {
         // Special case: empty DLL
         if (first == NULL) {
@@ -99,22 +112,25 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> 
         return NULL;
     }
 
-    // get category reference from catNo
-    LinkedListNode<float>* getCategory(int catNo) {
+    // Print function
+    void displayProducts() {
+
         LinkedListNode<float>* category = this->first;
-        
-        for (int i = 1; i < 4; i++)
-        {
-            if(i == catNo){
-                break;
-            } else {
-                category = category->next;
-            }
+
+        while (category != NULL) {
+            cout << "Category: " << category->name << endl;
+
+            category->displayProducts();
+
+            category = category->next;
+
+            cout << endl;
         }
-        return category;
+
+        return;
     }
 
-        // Print specific category product 
+    // Print specific category product 
     void displaybyCatProducts(int catNo) {
 
         LinkedListNode<float>* category = this->first;
@@ -171,22 +187,55 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> 
         }
 
         return;
-    }   
+    }
 
-    // Print function
-    void displayProducts() {
-
+    // get category reference from catNo
+    LinkedListNode<float>* getCategory(int catNo) {
         LinkedListNode<float>* category = this->first;
+        
+        for (int i = 1; i < 4; i++)
+        {
+            if(i == catNo){
+                break;
+            } else {
+                category = category->next;
+            }
+        }
+        return category;
+    }
+
+    // This changes the sort method of the LinkedLists stored inside the CategoryDoubleLinkedList
+    void sortTo(string key) {
+        LinkedListNode<float>* category = this->first;
+        LinkedListNode<float>* prev = NULL;
+        LinkedListNode<float>* newFirst = NULL;
+
 
         while (category != NULL) {
-            cout << "Category: " << category->name << endl;
+            category = category->nodeSortTo(key);
 
-            category->displayProducts();
+            // Since sortTo reassigns the pointer to a new object, the referencing needs to be updated
+            if (prev != NULL) {
+                prev->next = category;
+                category->prev = prev;
+            }
 
+
+                // Special case: this is the first LinkedListNode sorting differently.
+                // in this case the head of the catalogue DLL need to be set to this. The head is reserved
+                // the first and last node can be updated at the same time after the loop. This ensures no
+                // partial switch.
+            else {
+                newFirst = category;
+            }
+
+            // Increment along
+            prev = category;
             category = category->next;
-
-            cout << endl;
         }
+
+        // Update the catalogue, so it is linked to the new (resorted) nodes
+        this->setFirstAndLast(newFirst, prev);
 
         return;
     }
