@@ -15,14 +15,16 @@ using namespace std;
 
 // Constructor Implementation
 // Takes a name and email, but sets the next node reference to NULL
-CustomerNode::CustomerNode(string name, string email) : name(name), email(email)
+template <class stringType>
+CustomerNode<stringType>::CustomerNode(stringType name, stringType email) : name(name), email(email)
 {
     next = NULL;
 }
 
 // Print function Implementation
 // Prints only the name and email
-void CustomerNode::print()
+template <class stringType>
+void CustomerNode<stringType>::print()
 {
     cout << name << ": " << email << endl;
     return;
@@ -32,7 +34,8 @@ void CustomerNode::print()
 
 // Constructor Implementation
 // Creates an empty Circular Queue object
-CustomerHistoryCQ::CustomerHistoryCQ(int maxSizeLocal)
+template <class stringType>
+CustomerHistoryCQ<stringType>::CustomerHistoryCQ(int maxSizeLocal)
 {
     maxSize = maxSizeLocal;
     front = rear = NULL;
@@ -41,10 +44,11 @@ CustomerHistoryCQ::CustomerHistoryCQ(int maxSizeLocal)
 // Enqueue Implementation
 // Takes the arguments required for a Customer Node and adds a new node with
 // those details to the queue
-void CustomerHistoryCQ::enqueue(string name, string email)
+template <class stringType>
+void CustomerHistoryCQ<stringType>::enqueue(stringType name, stringType email)
 {
     // Create a new Customer Node
-    CustomerNode *temp = new CustomerNode(name, email);
+    CustomerNode<stringType> *temp = new CustomerNode<stringType>(name, email);
 
     // Special case: Queue will exceed max size
     // Dequeue first node
@@ -74,7 +78,8 @@ void CustomerHistoryCQ::enqueue(string name, string email)
 
 // Dequeue implementation
 // Removes the first node in the queue
-void CustomerHistoryCQ::dequeue()
+template <class stringType>
+void CustomerHistoryCQ<stringType>::dequeue()
 {
     // Special case: Queue is empty
     if (size < 1)
@@ -104,7 +109,8 @@ void CustomerHistoryCQ::dequeue()
 
 // Print function implementation
 // Prints out all elements in the queue
-void CustomerHistoryCQ::print()
+template <class stringType>
+void CustomerHistoryCQ<stringType>::print()
 {
     // Special case: Queue is empty
     if (size < 1)
@@ -114,7 +120,7 @@ void CustomerHistoryCQ::print()
     }
 
     // Navigation node
-    CustomerNode *temp = front;
+    CustomerNode<stringType> *temp = front;
 
     // Formatting for first node printed
     cout << "Customer History:\n";

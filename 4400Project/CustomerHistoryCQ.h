@@ -14,16 +14,18 @@ using namespace std;
 
 
 // ~~~~~ CUSTOMER NODE (LINKED LIST) DECLARATION ~~~~~
-struct CustomerNode {
+template <class stringType>
+class CustomerNode {
+    public:
     // Customer details
-    string name;
-    string email;
+    stringType name;
+    stringType email;
 
     // Next Node reference
     CustomerNode *next;
 
     // Constructor Declaration
-    CustomerNode(string name, string email);
+    CustomerNode(stringType name, stringType email);
 
     // Print Function Declaration
     void print();
@@ -32,9 +34,11 @@ struct CustomerNode {
 
 
 // ~~~~~ CUSTOMER HISTORY (CIRCULAR QUEUE) DECLARATION ~~~~~
-struct CustomerHistoryCQ {
+template <class stringType>
+class CustomerHistoryCQ {
+    public:
     // Front and rear node references
-    CustomerNode *front, *rear;
+    CustomerNode<stringType> *front, *rear;
 
     // Size variables
     int maxSize;
@@ -44,7 +48,7 @@ struct CustomerHistoryCQ {
     CustomerHistoryCQ(int maxSizeLocal);
 
     //Enqueue and Dequeue Declaration
-    void enqueue(string name, string email);
+    void enqueue(stringType name, stringType email);
     void dequeue();
 
     // Print function Declaration

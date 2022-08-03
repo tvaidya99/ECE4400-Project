@@ -7,7 +7,7 @@
 #include "jsonParser.h"
 
 using namespace std;
-CustomerHistoryCQ quo(1);
+CustomerHistoryCQ<string> quo(1);
 JSONInterface *json = new JSONInterface();
 
 template <typename PriceDataType>
