@@ -15,13 +15,6 @@ void sortTo(int catNo, string key)
 {
     CategoryDoubleLinkedList *catalogue = json->getCatalogue();
 
-    if (catNo == 4)
-    {
-        LinkedList<PriceDataType> *catalogueSingleCategory = json->getWholeCatalogue();
-        catalogueSingleCategory->sortTo(key);
-    }
-    else
-    {
         LinkedListNode<PriceDataType> *category = catalogue->getFirst();
         LinkedListNode<PriceDataType> *prev = NULL;
         LinkedListNode<PriceDataType> *newFirst = NULL;
@@ -46,7 +39,11 @@ void sortTo(int catNo, string key)
 
         // Update the catalogue, so it is linked to the new (resorted) nodes
         catalogue->setFirstAndLast(newFirst, prev);
-    }
+
+        // sort all products linked list
+        LinkedList<PriceDataType> *catalogueSingleCategory = json->getWholeCatalogue();
+        catalogueSingleCategory->sortTo(key);
+    
 }
 
 template <typename PriceDataType>
@@ -194,12 +191,7 @@ void displayAllCategories(string user, string key)
             }
             else
             {
-                cout << "Display Settings: All categories, ordered by " << key << ".\n";
-                // if not already sorted, sort all products to current key
-                if (catalogueSingleCategory->key != key)
-                {
-                    sortTo<PriceDataType>(4, key);
-                }
+                cout << "Display Settings: All categories, ordered by " << catalogueSingleCategory->key << ".\n";
                 catalogueSingleCategory->displayProducts();
             }
             displayAllCategories<PriceDataType>(user, currentSortBy);
@@ -259,7 +251,7 @@ void welcome()
 int main()
 {
     // to test admin customer history
-    quo.enqueue("Anuj", "arsevak@mun.ca");
+    //quo.enqueue("Anuj", "arsevak@mun.ca");
     // read data from json
     json->readData("catalogue.json");
     welcome<float>();
