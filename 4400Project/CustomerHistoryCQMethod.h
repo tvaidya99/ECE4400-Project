@@ -55,20 +55,18 @@ void CustomerHistoryCQ::enqueue(string name, string email)
         size++;
         return;
     }
-    else
+    // Special case: Queue will exceed max size
+    // Dequeue first node
+    if (size == maxSize)
     {
-        // Special case: Queue will exceed max size
-        // Dequeue first node
-        if (size == maxSize)
-        {
-            this->dequeue();
-        }
-        // Insert new node at the rear
-        rear->next = temp;
-        rear = temp;
-        rear->next = front;
-        size++;
+        this->dequeue();
     }
+
+    // Insert new node at the rear
+    rear->next = temp;
+    rear = temp;
+    rear->next = front;
+    size++;
 
     return;
 }

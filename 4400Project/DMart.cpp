@@ -18,7 +18,6 @@ void sortTo(int catNo, string key)
     if (catNo == 4)
     {
         LinkedList<PriceDataType> *catalogueSingleCategory = json->getWholeCatalogue();
-        //catalogueSingleCategory = catalogueSingleCategory->sortTo(key);
         catalogueSingleCategory->sortTo(key);
     }
     else
