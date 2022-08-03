@@ -149,8 +149,6 @@ void displayAllCategories(string user, string key)
 {
     CategoryDoubleLinkedList *catalogue = json->getCatalogue();
     LinkedList<PriceDataType> *catalogueSingleCategory = json->getWholeCatalogue();
-    LinkedListNode<PriceDataType> *prev = NULL;
-    LinkedListNode<PriceDataType> *newFirst = NULL;
     int catNo;
     cout << "Press 1 for Dairy...." << endl;
     cout << "Press 2 for Meat...." << endl;
