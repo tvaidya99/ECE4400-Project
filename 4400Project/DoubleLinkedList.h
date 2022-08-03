@@ -99,6 +99,21 @@ struct CategoryDoubleLinkedList : public DoubleLinkedList<LinkedListNode<float> 
         return NULL;
     }
 
+    // get category reference from catNo
+    LinkedListNode<float>* getCategory(int catNo) {
+        LinkedListNode<float>* category = this->first;
+        
+        for (int i = 1; i < 4; i++)
+        {
+            if(i == catNo){
+                break;
+            } else {
+                category = category->next;
+            }
+        }
+        return category;
+    }
+
         // Print specific category product 
     void displaybyCatProducts(int catNo) {
 

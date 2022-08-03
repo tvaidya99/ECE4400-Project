@@ -37,11 +37,11 @@ struct CustomerHistoryCQ {
     CustomerNode *front, *rear;
 
     // Size variables
-    const int maxSize = 5;
+    int maxSize;
     int size;
 
     // Constructor Declaration
-    CustomerHistoryCQ();
+    CustomerHistoryCQ(int maxSizeLocal);
 
     //Enqueue and Dequeue Declaration
     void enqueue(string name, string email);

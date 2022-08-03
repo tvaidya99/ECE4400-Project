@@ -4,7 +4,7 @@
   {"name": "sour cream", "category": "dairy", "price": 6.99, "expiry": 20220829, "count": 20},
   {"name": "ground beef", "category": "meat", "price": 17.99, "expiry": 20220806, "count": 10},
   {"name": "chicken breast", "category": "meat", "price": 12.99, "expiry": 20220807, "count": 12},
-  {"name": "pork chops", "category": "meat", "price": 21.99, "expiry": 20220809, "count": 12},
+  {"name": "pork chops", "category": "meat", "price": 11.99, "expiry": 20220809, "count": 12},
   {"name": "arugula", "category": "produce", "price": 7.99, "expiry": 20220804, "count": 7},
   {"name": "kiwi", "category": "produce", "price": 4.99, "expiry": 20220817, "count": 45},
   {"name": "orange", "category": "produce", "price": 6.99, "expiry": 20220817, "count": 45},

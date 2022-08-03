@@ -130,20 +130,24 @@ public:
         }
 
         // element not found
-        if(tempHead == NULL) {
+        if (tempHead == NULL)
+        {
             return;
         }
 
         // first element needs to be deleted
-        if(prev == NULL){
+        if (prev == NULL)
+        {
             head = head->next;
             delete tempHead;
             count--;
         }
         // deleting element beyond first element
-        else {
+        else
+        {
             // deleting last element
-            if(tempHead->next == NULL){
+            if (tempHead->next == NULL)
+            {
                 tail = prev;
             }
             prev->next = tempHead->next;
@@ -151,14 +155,22 @@ public:
         }
     }
 
-    LinkedList<PriceDataType> sortTo(string sortBy){
-        LinkedList<PriceDataType> sortedList(sortBy);
+    void sortTo(string sortBy)
+    {
+        LinkedList<PriceDataType> *sortedList = new LinkedList<PriceDataType>(sortBy);
         Node<PriceDataType> *tempHead = head;
-        while(tempHead != NULL){
-            sortedList.insertProduct(tempHead->product);
+        while (tempHead != NULL)
+        {
+            sortedList->insertProduct(tempHead->product);
             tempHead = tempHead->next;
         }
-        return sortedList;
+        // delete current list to free up memory
+        deleteAllProducts();
+        // set current linked list to the new one
+        head = sortedList->head;
+        tail = sortedList->tail;
+        count = sortedList->count;
+        key = sortedList->key;
     }
 
     void displayProducts()
@@ -170,7 +182,7 @@ public:
             while (tempHead != NULL)
             {
                 cout << tempHead->product.name << " - $" << tempHead->product.price
-                     << " - expiry on " << tempHead->product.expiry << "\n";
+                     << " - expiry on " << tempHead->product.expiry << " - In stock " << tempHead->product.count << "\n";
                 tempHead = tempHead->next;
             }
         }
@@ -197,8 +209,7 @@ public:
                 delete head;
                 head = tempHead;
             }
-            cout << "\n"
-                 << "Linked List deleted!";
+            // Linked List deleted!
             count = 0;
         }
     }
